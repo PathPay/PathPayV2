@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PathPay Checkout Agent</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">P</div>
+          <div>
+            <strong>PathPay</strong>
+            <span>Stablecoin checkout agent</span>
+          </div>
+        </div>
+        <div class="network-pill">
+          <span class="dot"></span>
+          Demo network
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">For blocked global checkout</span>
+          <h1>Paste a checkout link. Pay with USDT. PathPay finds the route.</h1>
+          <p>
+            The demo analyzes merchant compatibility, escrows stablecoins, simulates route execution,
+            and returns a purchase confirmation.
+          </p>
+        </div>
+
+        <form id="checkoutForm" class="checkout-card">
+          <label for="checkoutUrl">Checkout URL</label>
+          <input
+            id="checkoutUrl"
+            type="url"
+            value="https://www.namecheap.com/domains"
+            placeholder="https://merchant.com/checkout"
+            autocomplete="off"
+            required
+          />
+
+          <div class="form-grid">
+            <div>
+              <label for="amount">Purchase amount</label>
+              <div class="money-input">
+                <span>$</span>
+                <input id="amount" type="number" min="1" step="1" value="18" required />
+              </div>
+            </div>
+            <div>
+              <label for="country">User country</label>
+              <select id="country">
+                <option>Nigeria</option>
+                <option>Ghana</option>
+                <option>Kenya</option>
+                <option>Gabon</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="primary-button">Analyze purchase</button>
+        </form>
+      </section>
+
+      <section class="flow-grid">
+        <aside class="panel flow-panel">
+          <div class="panel-title">
+            <h2>Demo Flow</h2>
+            <span id="flowStatus">Ready</span>
+          </div>
+          <div id="steps" class="steps"></div>
+        </aside>
+
+        <section class="main-stage">
+          <div class="stage-card">
+            <div class="stage-head">
+              <div>
+                <span class="eyebrow">Analyzed purchase</span>
+                <h2 id="merchantName">Namecheap</h2>
+              </div>
+              <div class="risk-meter">
+                <span>Route confidence</span>
+                <strong id="confidenceScore">Medium</strong>
+              </div>
+            </div>
+
+            <div class="route-map">
+              <div class="route-node">
+                <span>User</span>
+                <strong id="userCountry">Nigeria</strong>
+              </div>
+              <div class="route-line"></div>
+              <div class="route-node">
+                <span>Deposit</span>
+                <strong id="depositAmount">18 USDT</strong>
+              </div>
+              <div class="route-line"></div>
+              <div class="route-node">
+                <span>Escrow</span>
+                <strong id="escrowState">Waiting</strong>
+              </div>
+              <div class="route-line"></div>
+              <div class="route-node">
+                <span>Merchant</span>
+                <strong id="merchantShort">Namecheap</strong>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button id="depositButton" class="secondary-button" type="button">Deposit USDT</button>
+              <button id="escrowButton" class="secondary-button" type="button" disabled>Escrow funds</button>
+              <button id="executeButton" class="primary-button" type="button" disabled>Execute purchase</button>
+            </div>
+          </div>
+
+          <div class="cards-row">
+            <article class="panel insight-card">
+              <div class="panel-title">
+                <h3>Selected Route</h3>
+                <span id="routeBadge">Pending</span>
+              </div>
+              <div id="routeDetails" class="detail-list"></div>
+            </article>
+
+            <article class="panel insight-card">
+              <div class="panel-title">
+                <h3>Smart Contract</h3>
+                <span>Simulated</span>
+              </div>
+              <div class="contract-box">
+                <div>
+                  <small>Escrow address</small>
+                  <strong id="escrowAddress">0xPATH...0000</strong>
+                </div>
+                <div>
+                  <small>Transaction</small>
+                  <strong id="txHash">Not created</strong>
+                </div>
+                <div>
+                  <small>Status</small>
+                  <strong id="contractStatus">Awaiting deposit</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <section class="panel confirmation-panel">
+            <div class="panel-title">
+              <h3>Confirmation</h3>
+              <span id="confirmationBadge">No purchase yet</span>
+            </div>
+            <div id="confirmation" class="confirmation-empty">
+              Run the demo flow to see the purchase confirmation.
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
